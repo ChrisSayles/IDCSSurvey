@@ -46,7 +46,7 @@ class App extends Component {
        elements: [
         {
          type: "radiogroup",
-         name: "Will IDCS be used by consumers or enterprise users",
+         name: "1",
          title: "Will IDCS be used by consumers or enterprise users? ",
          description: "http://www.google.com",
          choices: [
@@ -62,7 +62,7 @@ class App extends Component {
         },
         {
          type: "radiogroup",
-         name: "What will IDCS be protecting?",
+         name: "2",
          title: "What will IDCS be protecting?",
          choices: [
           {
@@ -81,8 +81,8 @@ class App extends Component {
         },
         {
          type: "radiogroup",
-         name: "Which Oracle Cloud Services?",
-         visibleIf: "{What will IDCS be protecting?} = 'Oracle Cloud'",
+         name: "3",
+         visibleIf: "{2} = 'Oracle Cloud'",
          title: "Which Oracle Cloud Services?",
          choices: [
           {
@@ -106,7 +106,7 @@ class App extends Component {
         {
          type: "radiogroup",
          name: "Which 3rd Party Clouds Applications?",
-         visibleIf: "{What will IDCS be protecting?} = '3rd Party'",
+         visibleIf: "{2} = '3rd Party'",
          title: "Which 3rd Party Clouds Applications?",
          choices: [
           {
@@ -153,8 +153,8 @@ class App extends Component {
         },
         {
          type: "radiogroup",
-         name: "Which on Premises Applications?",
-         visibleIf: "{What will IDCS be protecting?} = 'On Premises'",
+         name: "4",
+         visibleIf: "{2} = 'On Premises'",
          title: "Which on Premises Applications? ",
          choices: [
           {
@@ -229,7 +229,7 @@ class App extends Component {
         },
         {
          type: "radiogroup",
-         name: "Login to IDCS via:",
+         name: "5",
          title: "Login to IDCS via:",
          choices: [
           {
@@ -256,8 +256,8 @@ class App extends Component {
         },
         {
          type: "radiogroup",
-         name: "Will you allow users to change their forgotten password recovery email?",
-         visibleIf: "{Login to IDCS via:} = 'Delegated Auth' or {Login to IDCS via:} = 'Local IDCS Password';\n\n\n\n",
+         name: "6",
+         visibleIf: "{5} = 'Delegated Auth' or {Login to IDCS via:} = 'Local IDCS Password';\n\n\n\n",
          title: "Will you allow users to change their forgotten password recovery email?",
          choices: [
           {
@@ -272,8 +272,8 @@ class App extends Component {
         },
         {
          type: "radiogroup",
-         name: "Will you be authenticating with a social login?",
-         visibleIf: "{Login to IDCS via:}='Social Authentication'",
+         name: "7",
+         visibleIf: "{5}='Social Authentication'",
          title: "Will you be authenticating with a social login?",
          choices: [
           {
@@ -304,8 +304,8 @@ class App extends Component {
         },
         {
          type: "checkbox",
-         name: "Will Multi-Factor Authentication be used?",
-         visibleIf: "{Login to IDCS via:} = 'Multi-Factor Authentication'",
+         name: "8",
+         visibleIf: "{5} = 'Multi-Factor Authentication'",
          title: "Will Multi-Factor Authentication be used?",
          choices: [
           {
@@ -336,7 +336,7 @@ class App extends Component {
         },
         {
          type: "radiogroup",
-         name: "How would you like to create users/groups, manually or automatically?",
+         name: "9",
          title: "How would you like to create users/groups, manually or automatically?",
          choices: [
           {
@@ -378,12 +378,14 @@ class App extends Component {
   }
 
   onComplete(result) {
-    console.log(result.valuesHash);
+    console.log(result.data);
+    var resultsData = JSON.stringify(result.data);
     document.querySelector('#root').innerHTML = "result: " + JSON.stringify(result.data);
   }
 
   render() {
     Survey.Survey.cssType = "bootstrap";
+    Survey.JsonObject.metaData.addProperty("question", {name: "id:number"});
     var model = new Survey.Model(this.json);
     return (
       <div className="App">
